@@ -16,10 +16,10 @@ services:
     image: avhost/docker-matrix:latest
     command: generate
     environment:
-      - SYNAPSE_SERVER_NAME=${FQDN}
-      - SYNAPSE_REPORT_STATS=no
-      - SYNAPSE_ENABLE_REGISTRATION=yes
-      - SYNAPSE_LOG_LEVEL=INFO
+      - SERVER_NAME=${FQDN}
+      - REPORT_STATS=no
+      - ENABLE_REGISTRATION=yes
+      - LOG_LEVEL=INFO
       - POSTGRES_DB=postgres
       - POSTGRES_USER=matrix
       - POSTGRES_PASSWORD=${POSTRES_PASSWORD}
