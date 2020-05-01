@@ -11,3 +11,19 @@ services:
     ports:
       - 80:80
       - 443:443
+
+  synapse:
+    image: avhost/docker-matrix:latest
+    command: generate
+    environment:
+      - SYNAPSE_SERVER_NAME=${FQDN}
+      - SYNAPSE_REPORT_STATS=no
+      - SYNAPSE_ENABLE_REGISTRATION=yes
+      - SYNAPSE_LOG_LEVEL=INFO
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=matrix
+      - POSTGRES_PASSWORD=${POSTRES_PASSWORD}
+      - SYNAPSE_NO_TLS=1
+      - SYNAPSE_MAX_UPLOAD_SIZE=100M
+    volumes:
+      - ./files:/data
