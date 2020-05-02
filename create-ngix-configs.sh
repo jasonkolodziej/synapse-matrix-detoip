@@ -106,11 +106,11 @@ http {
 
     #for synapse delegation
     # `${FQDN}` was originally matrix.example.com
-    location ^~ /.well-known/matrix/server {
+    location ~ ^/.well-known/matrix/server$ {
       return 200 '{"m.server": "${FQDN}:443"}';
       add_header Content-Type application/json;
     }
-    location ^~ /.well-known/matrix/client {
+    location ~ ^/.well-known/matrix/client$ {
       return 200 '{"m.homeserver": {"base_url": "https://${FQDN}"},"m.identity_server": {"base_url": "https://vector.im"}}';
       add_header Content-Type application/json;
       add_header "Access-Control-Allow-Origin" *;
