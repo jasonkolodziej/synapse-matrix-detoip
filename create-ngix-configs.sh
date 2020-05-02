@@ -103,18 +103,6 @@ http {
         allow all;
         root  /data/letsencrypt/;
     }
-
-    #for synapse delegation
-    # `${FQDN}` was originally matrix.example.com
-    location ~ ^/.well-known/matrix/server$ {
-      return 200 '{"m.server": "${FQDN}:443"}';
-      add_header Content-Type application/json;
-    }
-    location ~ ^/.well-known/matrix/client$ {
-      return 200 '{"m.homeserver": {"base_url": "https://${FQDN}"},"m.identity_server": {"base_url": "https://vector.im"}}';
-      add_header Content-Type application/json;
-      add_header "Access-Control-Allow-Origin" *;
-    }
   }
 
   # `${FQDN}` was originally example.com
@@ -132,7 +120,7 @@ http {
     client_max_body_size  512m;
 
     # pass requests for dynamic content to rails/turbogears/zope, et al
-    location / {
+    location /_matrix {
       proxy_set_header        Host $_host;
       proxy_set_header        X-Real-IP $_remote_addr;
       proxy_set_header        X-Forwarded-For $_proxy_add_x_forwarded_for;
@@ -142,6 +130,18 @@ http {
       proxy_read_timeout  90;
 
       proxy_redirect      http://synapse:8008 https://${FQDN};
+    }
+
+    #for synapse delegation
+    # `${FQDN}` was originally matrix.example.com
+    location ~ ^/.well-known/matrix/server$ {
+      return 200 '{"m.server": "${FQDN}:443"}';
+      add_header Content-Type application/json;
+    }
+    location ~ ^/.well-known/matrix/client$ {
+      return 200 '{"m.homeserver": {"base_url": "https://${FQDN}"},"m.identity_server": {"base_url": "https://vector.im"}}';
+      add_header Content-Type application/json;
+      add_header "Access-Control-Allow-Origin" *;
     }
 
     # location /riot/ {
