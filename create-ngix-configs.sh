@@ -93,7 +93,7 @@ http {
   server {
     listen      80;
     listen [::]:80;
-    server_name example.com;
+    server_name ${FQDN};
 
     location / {
         rewrite ^ https://$_host$_request_uri? permanent;
@@ -104,7 +104,7 @@ http {
         root  /data/letsencrypt/;
     }
 
-    #for synapse federation
+    #for synapse delegation
     # `${FQDN}` was originally matrix.example.com
     location /.well-known/matrix/server {
       return 200 '{"m.server": "${FQDN}:443"}';
@@ -125,7 +125,7 @@ http {
     ssl_certificate_key /etc/letsencrypt/live/${FQDN}/privkey.pem;
     ssl_trusted_certificate   /etc/letsencrypt/live/${FQDN}/chain.pem;
 
-    server_name chat.boopingsnoots.club;
+    server_name ${FQDN};
 
     access_log                /dev/stdout;
     error_log                 /dev/stderr info;
@@ -158,6 +158,22 @@ http {
     #   proxy_redirect      off;
     # }
   }
+
+  # for federation purposes
+  server {
+    listen 8448 ssl;
+    ssl_certificate /etc/letsencrypt/live/${FQDN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${FQDN}/privkey.pem;
+    ssl_trusted_certificate   /etc/letsencrypt/live/${FQDN}/chain.pem;
+
+    server_name ${FQDN};
+
+    location / {
+        proxy_pass http://synapse:8008;
+        proxy_set_header X-Forwarded-For $remote_addr;
+    }
+
+}
 
 }
 EOF
