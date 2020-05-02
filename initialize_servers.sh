@@ -1,5 +1,13 @@
 _both=0
 _ran_init=0
+# Script to check the alias output
+shopt -s expand_aliases
+alias docker-compose='docker run --rm \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v "$PWD:$PWD" \
+    -w="$PWD" \
+    docker/compose:latest'
+
 if [ $# -eq 0 ]
 then
     echo "No argument supplied, initializing ALL servers."
