@@ -17,7 +17,7 @@ fi
 if [[ $1 == "nginx" || $_both -eq 1 ]]
 then
     echo "Initializing nginx server..."
-    docker-compose -f docker-compose.init-nginx.yml up
+    docker-compose -f docker-compose.init-nginx.yml up -d
     _ran_init=1
 fi
 

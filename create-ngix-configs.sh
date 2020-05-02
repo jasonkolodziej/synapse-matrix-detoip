@@ -144,19 +144,19 @@ http {
       proxy_redirect      http://synapse:8008 https://${FQDN};
     }
 
-    location /riot/ {
-      proxy_set_header        Host $_host;
-      proxy_set_header        X-Real-IP $_remote_addr;
-      proxy_set_header        X-Forwarded-For $_proxy_add_x_forwarded_for;
-      proxy_set_header        X-Forwarded-Proto $_scheme;
+    # location /riot/ {
+    #   proxy_set_header        Host $_host;
+    #   proxy_set_header        X-Real-IP $_remote_addr;
+    #   proxy_set_header        X-Forwarded-For $_proxy_add_x_forwarded_for;
+    #   proxy_set_header        X-Forwarded-Proto $_scheme;
 
-      rewrite ^/riot(/.*)$ $_one break;
+    #   rewrite ^/riot(/.*)$ $_one break;
 
-      proxy_pass          http://riotweb:80;
-      proxy_read_timeout  90;
+    #   proxy_pass          http://riotweb:80;
+    #   proxy_read_timeout  90;
 
-      proxy_redirect      off;
-    }
+    #   proxy_redirect      off;
+    # }
   }
 
 }
