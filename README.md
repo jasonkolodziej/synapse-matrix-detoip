@@ -1,4 +1,4 @@
-# matrix-riot-docker
+# synapse-riot-docker
 an all-in-one docker compose setup for a personal riot client and matrix server
 
 usage
@@ -15,7 +15,7 @@ then run renew certs with your fully qualified domain name
 ```
 ./renew-cert.sh example.com
 ```
-this will hit your nginx proxy with the correct endpoints to authenticate with lets-encrypt, filling out your certs and certs-data folders if successfull.
+this will hit your nginx proxy with the correct endpoints to authenticate with lets-encrypt, filling out your certs and certs-data folders if successful.
 
 Then you just run
 ```

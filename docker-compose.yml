@@ -26,18 +26,16 @@ services:
   #     - webproxy
 
   synapse:
-    image: avhost/docker-matrix:latest
-    command: start
+    image: matrixdotorg/synapse:latest
     hostname: synapse
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
-      - SERVER_NAME=${FQDN}
-      - REPORT_STATS=no
-      - ENABLE_REGISTRATION=yes
+      - SYNAPSE_SERVER_NAME=${FQDN}
       - LOG_LEVEL=INFO
       - POSTGRES_DB=postgres
-      - POSTGRES_USER=matrix
-      - POSTGRES_PASSWORD=${POSTRES_PASSWORD}
+      - POSTGRES_USER=matrix_synapse
       - SYNAPSE_NO_TLS=1
       - SYNAPSE_MAX_UPLOAD_SIZE=100M
     volumes:
@@ -50,11 +48,14 @@ services:
   db:
     image: docker.io/postgres:10-alpine
     restart: unless-stopped
+    env_file:
+      - .env
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=matrix
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=matrix_synapse
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+      # - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - ./schemas:/var/lib/postgresql/data
     networks:
