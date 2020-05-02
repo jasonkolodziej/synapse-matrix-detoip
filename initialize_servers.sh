@@ -17,7 +17,7 @@ if [[ $1 == "matrix" || $_both -eq 1 ]]
 then
     echo "Initializing matrix server..."
     source '.env'
-    docker run -it --rm -v ./files:/data \
+    docker run -it --rm -v /${PWD}/files:/data \
      -e SYNAPSE_SERVER_NAME=${FQDN} \
      -e SYNAPSE_REPORT_STATS=${SYNAPSE_REPORT_STATS} \
      -e SYNAPSE_ENABLE_REGISTRATION=${SYNAPSE_ENABLE_REGISTRATION} \
