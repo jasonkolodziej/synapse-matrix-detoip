@@ -170,7 +170,7 @@ http {
 
     location / {
         proxy_pass http://synapse:8008;
-        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-For $_remote_addr;
     }
 
 }
