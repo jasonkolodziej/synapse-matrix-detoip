@@ -5,7 +5,7 @@ echo
 echo "Adding to $_file file..."
 source '.env'
 {
-cat <<-EOF >> ${PWD}/files/homeserver.yaml
+sudo cat <<-EOF >> ${PWD}/files/homeserver.yaml
 
 database:
     name: psycopg2
