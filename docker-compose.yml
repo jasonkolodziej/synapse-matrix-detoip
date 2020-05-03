@@ -34,10 +34,6 @@ services:
     environment:
       - SYNAPSE_SERVER_NAME=${FQDN}
       - LOG_LEVEL=INFO
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=matrix_synapse
-      - SYNAPSE_NO_TLS=1
-      - SYNAPSE_MAX_UPLOAD_SIZE=100M
     volumes:
       - ./files:/data
     depends_on:

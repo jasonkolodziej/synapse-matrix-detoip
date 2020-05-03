@@ -29,6 +29,10 @@ then
      -e SYNAPSE_SERVER_NAME=${FQDN} \
      -e SYNAPSE_REPORT_STATS=${SYNAPSE_REPORT_STATS} \
      -e SYNAPSE_ENABLE_REGISTRATION=${SYNAPSE_ENABLE_REGISTRATION} \
+     -e POSTGRES_DB=postgres \
+     -e POSTGRES_USER=matrix_synapse \
+     -e SYNAPSE_NO_TLS=1 \
+     -e SYNAPSE_MAX_UPLOAD_SIZE=100M \
      matrixdotorg/synapse:latest generate
     echo
     echo "WARNING:"
