@@ -120,7 +120,8 @@ http {
     client_max_body_size  512m;
 
     # pass requests for dynamic content to rails/turbogears/zope, et al
-    location /_matrix {
+    # see : https://www.natrius.eu/dokuwiki/doku.php?id=digital:server:matrixsynapse
+    location / {
       proxy_set_header        Host $_host;
       proxy_set_header        X-Real-IP $_remote_addr;
       proxy_set_header        X-Forwarded-For $_proxy_add_x_forwarded_for;
